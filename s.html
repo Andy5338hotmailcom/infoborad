@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>艺术类社团向导</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 顶部栏 */
+        .top-bar {
+            height: 40px;
+            background: #0078d4;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            color: white;
+            font-size: 16px;
+            gap: 10px;
+        }
+
+        /* 按钮组 */
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* 刷新按钮 */
+        #refreshBtn {
+            background: white;
+            color: #0078d4;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #refreshBtn:hover {
+            background: #e6f0fb;
+        }
+
+        /* 跳转按钮（橙色，更醒目） */
+        #jumpBtn {
+            background: #ff8c00;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #jumpBtn:hover {
+            background: #e67e00;
+        }
+
+        /* 内嵌网页 */
+        #iframeContent {
+            flex: 1;
+            border: none;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="top-bar">
+        <span>艺术类社团向导搜索工具</span>
+        
+        <div class="btn-group">
+            <!-- 跳转按钮 -->
+            <button id="jumpBtn">返回主页</button>
+            <!-- 刷新按钮 -->
+            <button id="refreshBtn">刷新</button>
+        </div>
+    </div>
+
+    <iframe id="iframeContent" src="se.html"></iframe>
+</div>
+
+<script>
+    // 刷新
+    document.getElementById('refreshBtn').onclick = function() {
+        document.getElementById('iframeContent').src = "se.html";
+    };
+
+    // 跳转 → 你想跳哪个HTML，就改这里！
+    document.getElementById('jumpBtn').onclick = function() {
+        // 例子：跳转到 browser.html
+        window.location.href = "index.html";
+    };
+</script>
+
+</body>
+</html>

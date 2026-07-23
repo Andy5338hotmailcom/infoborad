@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新日志</title>
+    <!-- Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 统一的 Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#64748b',
+                        neutral: '#ffffff',
+                        dark: '#1e293b'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass-effect {
+                background: rgba(241, 245, 249, 0.7);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+            .version-badge {
+                @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary text-white;
+            }
+            .changelog-item {
+                @apply border-l-4 border-primary pl-4 py-1 mb-2;
+            }
+            .search-input {
+                @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300;
+            }
+            .back-button {
+                @apply flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-all duration-300 shadow-md hover:shadow-lg;
+            }
+            .version-card {
+                @apply bg-white rounded-lg shadow-card p-6 mb-6 transition-all duration-300 hover:shadow-lg;
+            }
+            .no-results {
+                @apply text-center py-10 text-gray-500;
+            }
+        }
+    </style>
+</head>
+<body class="bg-neutral min-h-screen">
+    <!-- 主体直接顶边，去掉标题栏、返回按钮 -->
+    <main class="container mx-auto px-4 pt-8 pb-8">
+        <!-- 更新日志列表 -->
+        <div id="changelogList" class="space-y-6">
+            <!-- 版本记录将通过 JavaScript 动态生成 -->
+        </div>
+
+        <!-- 无结果提示 -->
+        <div id="noResults" class="no-results hidden">
+            <i class="fa fa-search-minus text-4xl mb-4 block"></i>
+            <p class="text-lg">未找到匹配的版本记录</p>
+        </div>
+    </main>
+
+
+    <script>
+        // 更新日志数据
+        const changelogData = [
+            {
+                version: "build13.0.1",
+                date: "2026-07-17",
+                description: "删删删*2！",
+                changes: [
+                    "我们把更新模块删了……"
+                ]
+            },
+            {
+                version: "build13.0.0",
+                date: "2026-07-17",
+                description: "删删删！",
+                changes: [
+                    "我们把做操视频模块删了……"
+                ]
+            },
+            {
+                version: "build12.1",
+                date: "2026-07-08",
+                description: "安装包*2",
+                changes: [
+                    "继续安装包安装！"
+                ]
+            },
+            {
+                version: "build12",
+                date: "2026-07-08",
+                description: "设置！",
+                changes: [
+                    "修改了更新界面成为设置的一部分",
+                    "把更新日志集合到设置里面"
+                ]
+            },
+            {
+                version: "build11",
+                date: "2026-07-07",
+                description: "更新界面修改",
+                changes: [
+                    "修改了更新界面，以后将成为设置的一部分",
+                    "以后将会把部分功能集合到设置里面",
+                    "上期揭晓：newcao.mp4是新版室内操视频，你猜对了吗？"
+                ]
+            },
+            {
+                version: "build10.2",
+                date: "2026-07-06",
+                description: "视频正在压缩",
+                changes: [
+                    "大的受不了了",
+                    "此版本压缩了一个视频newcao.mp4(猜猜看是哪一个)"
+                ]
+            },
+            {
+                version: "build10.1",
+                date: "2026-07-05",
+                description: "安装包？",
+                changes: [
+                    "大的受不了了",
+                    "此版本为安装包安装"
+                ]
+            },
+            {
+                version: "build10",
+                date: "2026-07-04",
+                description: "第十了！",
+                changes: [
+                    "终于第十版了！",
+                    "重新编译了一下"
+                ]
+            },
+            {
+                version: "build9",
+                date: "2026-05-11",
+                description: "第九细节一号",
+                changes: [
+                    "添加了退出提示",
+                    "把一些功能整合进了更多",
+                    "添加了图标"
+                ]
+            },
+            {
+                version: "build8",
+                date: "2026-05-10",
+                description: "第八演出视频添加二号与视频修复三号",
+                changes: [
+                    "更改了昆曲团的背景音乐",
+                    "修复了部分排版问题",
+                    "添加了圆角",
+                    "部分视频添加了封面",
+                    "继续修复了弦乐团演出视频部分设备不能播放画面的问题",
+                    "继续添加了部分演出视频"
+                ]
+            },
+            {
+                version: "build7",
+                date: "2026-05-07",
+                description: "第七演出视频添加一号与视频修复二号",
+                changes: [
+                    "修复了弦乐团介绍视频部分设备不能播放画面的问题",
+                    "添加了部分演出视频"
+                ]
+            },
+            {
+                version: "build6",
+                date: "2026-04-20",
+                description: "第六视频修复一号与反馈版本",
+                changes: [
+                    "修复了首页部分设备背景视频不能播放的问题",
+                    "添加了反馈功能"
+                ]
+            },
+            {
+                version: "build5",
+                date: "2026-04-13",
+                description: "第五许可条款介绍视频统一版本",
+                changes: [
+                    "把介绍视频都样式统一",
+                    "紧急把第三更新日志添加版本改成第四更新日志添加版本",
+                    "添加许可条款"
+                ]
+            },
+            {
+                version: "build4",
+                date: "2026-04-12",
+                description: "第四更新日志添加版本",
+                changes: [
+                    "加了一个更新日志，就是这个界面……"
+                ]
+            },
+            {
+                version: "build3",
+                date: "2026-04-11",
+                description: "第三更改版本",
+                changes: [
+                    "修复部分问题，增加用户体验（学习某大厂的）"
+                ]
+            },
+            {
+                version: "build2",
+                date: "2026-04-11",
+                description: "第二集页更改版本",
+                changes: [
+                    "加了一个首页音乐"
+                ]
+            },
+            {
+                version: "build1",
+                date: "2026-04-10",
+                description: "第一集合版本",
+                changes: [
+                    "终于把所有都串联起来了！",
+                    "反正这样就这样",
+                    "就是大集合"
+                ]
+            }
+        ];
+
+        // DOM 元素（删除了返回按钮相关变量）
+        const changelogList = document.getElementById('changelogList');
+        const noResults = document.getElementById('noResults');
+
+        // 渲染更新日志
+        function renderChangelog(versions) {
+            changelogList.innerHTML = '';
+            
+            if (versions.length === 0) {
+                noResults.classList.remove('hidden');
+                changelogList.classList.add('hidden');
+                return;
+            }
+            
+            noResults.classList.add('hidden');
+            changelogList.classList.remove('hidden');
+            
+            versions.forEach(version => {
+                const versionCard = document.createElement('div');
+                versionCard.className = 'version-card';
+                
+                versionCard.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <span class="version-badge">${version.version}</span>
+                            <span class="text-sm text-gray-500 ml-2">${version.date}</span>
+                        </div>
+                        <button class="toggle-details text-gray-500 hover:text-primary transition-colors">
+                            <i class="fa fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">${version.description}</h3>
+                    <div class="details hidden mt-4 border-t pt-4">
+                        <h4 class="font-medium mb-2">更新内容：</h4>
+                        <ul class="space-y-2">
+                            ${version.changes.map(change => `
+                                <li class="changelog-item">
+                                    <i class="fa fa-check-circle text-green-500 mr-2"></i>
+                                    ${change}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+                
+                changelogList.appendChild(versionCard);
+                
+                // 添加展开/折叠功能
+                const toggleButton = versionCard.querySelector('.toggle-details');
+                const details = versionCard.querySelector('.details');
+                
+                toggleButton.addEventListener('click', () => {
+                    details.classList.toggle('hidden');
+                    toggleButton.querySelector('i').classList.toggle('fa-chevron-down');
+                    toggleButton.querySelector('i').classList.toggle('fa-chevron-up');
+                });
+            });
+        }
+
+        // 初始渲染
+        renderChangelog(changelogData);
+    </script>
+</body>
+</html>
